@@ -108,7 +108,7 @@
 
     /* Mobile Menu */
     .mobile-menu-toggle {
-      display: none;
+/*       display: none; */
       flex-direction: column;
       cursor: pointer;
       padding: 0.5rem;
@@ -554,9 +554,9 @@
 
     /* Responsive Design */
     @media (max-width: 768px) {
-      .mobile-menu-toggle {
-        display: flex;
-      }
+  .mobile-menu-toggle {
+    display: flex; /* Show on mobile */
+  }
 
       nav ul {
         display: none;
@@ -647,7 +647,11 @@
         font-size: 0.9rem;
       }
     }
-
+@media (min-width: 769px) {
+  .mobile-menu-toggle {
+    display: none;
+  }
+}
     /* Scrollbar Styling */
     ::-webkit-scrollbar {
       width: 8px;
