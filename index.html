@@ -108,7 +108,7 @@
 
     /* Mobile Menu */
     .mobile-menu-toggle {
-/*       display: none; */
+      display: none; /* Hidden by default on desktop */
       flex-direction: column;
       cursor: pointer;
       padding: 0.5rem;
@@ -127,6 +127,19 @@
       margin: 2px 0;
       transition: 0.3s;
       border-radius: 1px;
+    }
+
+    /* Mobile menu animation */
+    .mobile-menu-toggle.active span:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .mobile-menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-menu-toggle.active span:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
     }
 
     /* Hero Section */
@@ -554,9 +567,9 @@
 
     /* Responsive Design */
     @media (max-width: 768px) {
-  .mobile-menu-toggle {
-    display: flex; /* Show on mobile */
-  }
+      .mobile-menu-toggle {
+        display: flex; /* Show on mobile */
+      }
 
       nav ul {
         display: none;
@@ -647,11 +660,7 @@
         font-size: 0.9rem;
       }
     }
-@media (min-width: 769px) {
-  .mobile-menu-toggle {
-    display: none;
-  }
-}
+
     /* Scrollbar Styling */
     ::-webkit-scrollbar {
       width: 8px;
@@ -834,13 +843,31 @@
     // Mobile menu toggle
     function toggleMobileMenu() {
       const menu = document.getElementById('nav-menu');
+      const toggle = document.querySelector('.mobile-menu-toggle');
+      
       menu.classList.toggle('active');
+      toggle.classList.toggle('active');
     }
 
     function closeMobileMenu() {
       const menu = document.getElementById('nav-menu');
+      const toggle = document.querySelector('.mobile-menu-toggle');
+      
       menu.classList.remove('active');
+      toggle.classList.remove('active');
     }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const nav = document.querySelector('nav');
+      const menu = document.getElementById('nav-menu');
+      const toggle = document.querySelector('.mobile-menu-toggle');
+      
+      if (!nav.contains(event.target) && menu.classList.contains('active')) {
+        menu.classList.remove('active');
+        toggle.classList.remove('active');
+      }
+    });
 
     // Active navigation link
     window.addEventListener('scroll', () => {
@@ -849,25 +876,4 @@
       
       sections.forEach(section => {
         const top = section.offsetTop;
-        const bottom = top + section.offsetHeight;
-        const link = document.querySelector(`nav a[href="#${section.id}"]`);
-        
-        if (scrollPos >= top && scrollPos < bottom) {
-          document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-          if (link) link.classList.add('active');
-        }
-      });
-    });
-
-    // Image modal functions
-    function openImageModal(imageType) {
-      const modal = document.getElementById('imageModal');
-      const title = document.getElementById('modalTitle');
-      const description = document.getElementById('modalDescription');
-      
-      const imageInfo = {
-        'excel': { title: 'Excel Data Reporting', desc: 'Interactive Excel reporting dashboard with dynamic charts and PivotTables for comprehensive data analysis' },
-        'excel-dashboard': { title: 'Excel Dashboard Overview', desc: 'Complete dashboard showing sales metrics, KPIs, and trend analysis with real-time data updates' },
-        'excel-charts': { title: 'Excel Chart Examples', desc: 'Various chart types including line graphs, bar charts, and pie charts for effective data visualization' },
-        'excel-pivots': { title: 'PivotTable Demonstrations', desc: 'Advanced PivotTable configurations for data summarization and cross-tabular analysis' },
-        'sql': { title:
+        const bottom = top + section
